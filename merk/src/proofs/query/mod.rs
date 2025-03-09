@@ -164,7 +164,7 @@ impl Encode for Query {
 }
 
 #[cfg(any(feature = "minimal", feature = "verify"))]
-impl Decode for Query {
+impl<Context> Decode<Context> for Query {
     fn decode<D: bincode::de::Decoder>(decoder: &mut D) -> Result<Self, DecodeError> {
         // Decode the items vector
         let items = Vec::<QueryItem>::decode(decoder)?;
@@ -199,7 +199,7 @@ impl Decode for Query {
 }
 
 #[cfg(any(feature = "minimal", feature = "verify"))]
-impl<'de> BorrowDecode<'de> for Query {
+impl<'de, Context> BorrowDecode<'de, Context> for Query {
     fn borrow_decode<D: bincode::de::BorrowDecoder<'de>>(
         decoder: &mut D,
     ) -> Result<Self, DecodeError> {
